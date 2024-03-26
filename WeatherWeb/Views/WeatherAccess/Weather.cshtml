@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model string
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Data</title>
+</head>
+<body>
+    <h1>Weather Data for @ViewBag.City, @ViewBag.Country</h1>
+    @if (!string.IsNullOrEmpty(Model))
+    {
+        // Parse the JSON string into a dynamic object
+        dynamic weatherData = Newtonsoft.Json.JsonConvert.DeserializeObject(Model);
+        if (weatherData != null && weatherData.main != null)
+        {
+            // Display humidity and pressure
+            <p>Location: @weatherData.name</p>
+            <p>Looks like:  @weatherData.weather[0].description</p>
+            <p>Humidity: @weatherData.main.humidity</p>
+            <p>Pressure: @weatherData.main.pressure</p>  
+            <p>Temperature: @weatherData.main.temp</p>
+        }
+        else
+        {
+            <p>Weather data not available</p>
+        }
+    }
+    else
+    {
+        <p>No data available</p>
+    }
+
+
+    
+</body>
+</html>
